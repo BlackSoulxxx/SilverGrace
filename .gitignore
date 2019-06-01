@@ -15,7 +15,6 @@
 *.a
 *.s
 *.ko
-*.so
 *.so.dbg
 *.mod.c
 *.i
@@ -27,7 +26,6 @@
 *.gz
 *.bz2
 *.lzma
-*.xz
 *.lz4
 *.lzo
 *.patch
@@ -57,6 +55,7 @@ Module.symvers
 #
 !.gitignore
 !.mailmap
+!.placeholder
 
 #
 # Generated include files
