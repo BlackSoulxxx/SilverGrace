@@ -3,13 +3,17 @@
 
 	NOMBRE	: <b><#selectbg_g>MoRoKernel S7</#></b>	
 	VERSIÓN	: <b><#selectbg_g>AllInOne v7</#></b>
-	FECHA	: <b><#selectbg_g>15/06/2019</#></b>
+	FECHA	: <b><#selectbg_g>19/06/2019</#></b>
 	AUTOR	: <b><#selectbg_g>MoroGoku</#></b>
 
 	<#f00><b>SOLO PARA Galaxy S7 EDGE Y FLAT</b></#>
 
 
 <b>CHANGELOG:</b>
+
+<u><b><#selectbg_g>MoRoKernel AIO v7.0.1</#></b></u>
+<*>Corregido Ajustes Huella, gracias a Farovitus</*>
+<*>Actualizado MagiskManager 7.3.1 (222)</*>
 
 <u><b><#selectbg_g>MoRoKernel AIO v7.0</#></b></u>
 <*>All In One KERNEL, OREO, PIE, LINEAGE</*>
