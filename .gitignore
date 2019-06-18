@@ -21,7 +21,6 @@
 *.lst
 *.symtypes
 *.order
-*.elf
 *.bin
 *.gz
 *.bz2
