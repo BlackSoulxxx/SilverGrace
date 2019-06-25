@@ -2,14 +2,14 @@
 #
 # Thanks to Tkkg1994 and djb77 for the script
 #
-# MoRoKernel Build Script v1.2
+# SilverGrace Build Script v1.2
 #
 
 # SETUP
 # -----
 export ARCH=arm64
 export SUBARCH=arm64
-export BUILD_CROSS_COMPILE=/home/moro/kernel/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+export BUILD_CROSS_COMPILE=
 export CROSS_COMPILE=$BUILD_CROSS_COMPILE
 export BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
@@ -25,13 +25,11 @@ INCDIR=$RDIR/include
 PAGE_SIZE=2048
 DTB_PADDING=0
 
-DEFCONFIG=moro_defconfig
-DEFCONFIG_S7EDGE=moro-edge_defconfig
-DEFCONFIG_S7FLAT=moro-flat_defconfig
+DEFCONFIG=silvergrace_defconfig
 
-export K_VERSION="v1.1"
-export K_BASE="NFEPort-CSC4"
-export K_NAME="MoRoKernel"
+export K_VERSION="v0.1"
+export K_BASE="F"
+export K_NAME="SilverGrace"
 export REVISION="RC"
 export KBUILD_BUILD_VERSION="1"
 export KERNEL_VERSION="$K_NAME-$K_BASE-P-$K_VERSION"
@@ -64,12 +62,9 @@ FUNC_BUILD_KERNEL()
 	echo ""
         echo "Model: $MODEL"
         echo "build common config="$DEFCONFIG""
-        echo "build variant config="$KERNEL_DEFCONFIG""
 
 	cp -f $RDIR/arch/$ARCH/configs/$DEFCONFIG $RDIR/arch/$ARCH/configs/tmp_defconfig
-	cat $RDIR/arch/$ARCH/configs/$KERNEL_DEFCONFIG >> $RDIR/arch/$ARCH/configs/tmp_defconfig
 	
-
 	#FUNC_CLEAN_DTB
 
 	make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
@@ -89,12 +84,11 @@ FUNC_BUILD_DTB()
 		exit 1
 	}
 	case $MODEL in
-	G930)
-		DTSFILES="exynos8890-herolte_eur_open_04 exynos8890-herolte_eur_open_08
-				exynos8890-herolte_eur_open_09 exynos8890-herolte_eur_open_10"
-		;;
-	G935)
-		DTSFILES="exynos8890-hero2lte_eur_open_04 exynos8890-hero2lte_eur_open_08"
+	N935F)
+		DTSFILES="	exynos8890-gracelte_eur_open_00 exynos8890-gracelte_eur_open_01
+				exynos8890-gracelte_eur_open_02 exynos8890-gracelte_eur_open_03
+				exynos8890-gracelte_eur_open_05 exynos8890-gracelte_eur_open_07
+				exynos8890-gracelte_eur_open_09 exynos8890-gracelte_eur_open_11"
 		;;
 	*)
 
@@ -135,10 +129,6 @@ FUNC_BUILD_RAMDISK()
 	mv $RDIR/arch/$ARCH/boot/Image temp/split_img/boot.img-zImage
 	mv $RDIR/arch/$ARCH/boot/dtb.img temp/split_img/boot.img-dtb
 	cd temp
-
-	if [ $MODEL == "G930" ]; then
-		sed -i 's/SRPQH16A002KU/SRPQH16B002KU/g' split_img/boot.img-board
-	fi
 	
 	echo "Model: $MODEL"
 
@@ -160,7 +150,7 @@ FUNC_BUILD_FLASHABLES()
 	cd $RDIR/build/kernel-temp
 	echo ""
 	echo "Compressing kernels..."
-	tar cv * | xz -9 > ../temp/moro/kernel.tar.xz
+	tar cv * | xz -9 > ../temp/silver/kernel.tar.xz
 
 	cd $RDIR/build/temp
 	zip -9 -r ../$ZIP_NAME *
@@ -201,16 +191,14 @@ MAIN()
 # -------------
 clear
 echo "***********************"
-echo "MoRoKernel Build Script"
+echo "SilverGrace Build Script"
 echo "***********************"
 echo ""
 echo ""
 echo "Build Kernel for:"
 echo ""
-echo "S7 TW"
-echo "(1) S7 FLAT G930"
-echo "(2) S7 EDGE G935"
-echo "(3) S7 + S7 Edge"
+echo "NoteFE One UI"
+echo "(1) NoteFE N935F"
 echo ""
 echo ""
 echo ""
@@ -219,37 +207,11 @@ read -p "Select an option to compile the kernel " prompt
 
 if [ $prompt == "1" ]; then
 
-    echo "S7 G930 Selected"
+    echo "NoteFE N935F Selected"
 
-    MODEL=G930
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
+    MODEL=N935F
     ZIP=yes
-    ZIP_NAME=$K_NAME-$MODEL-NFEPort-$K_VERSION.zip
-    MAIN
-	
-elif [ $prompt == "2" ]; then
-
-    echo "S7 Edge G935 Selected"
-
-    MODEL=G935
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
-    ZIP=yes
-    ZIP_NAME=$K_NAME-$MODEL-NFEPort-$K_VERSION.zip
-    MAIN
-	
-elif [ $prompt == "3" ]; then
-
-    echo "S7 + S7 Edge Selected"
-
-    MODEL=G935
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7EDGE
-    ZIP=no
-    MAIN
-
-    MODEL=G930
-    KERNEL_DEFCONFIG=$DEFCONFIG_S7FLAT
-    ZIP=yes
-    ZIP_NAME=$K_NAME-G93X-NFEPort-$K_VERSION.zip
+    ZIP_NAME=$K_NAME-$MODEL-F-$K_VERSION.zip
     MAIN
 fi
 
