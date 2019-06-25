@@ -9,7 +9,7 @@
 # -----
 export ARCH=arm64
 export SUBARCH=arm64
-export BUILD_CROSS_COMPILE=
+export BUILD_CROSS_COMPILE=/home/spektykles/83-linaro/bin/aarch64-linux-gnu-
 export CROSS_COMPILE=$BUILD_CROSS_COMPILE
 export BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
 
