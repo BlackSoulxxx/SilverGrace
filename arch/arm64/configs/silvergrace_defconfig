@@ -475,8 +475,8 @@ CONFIG_SETEND_EMULATION=y
 #
 # ARMv8.1 architectural features
 #
-# CONFIG_ARM64_PAN=y
-# CONFIG_ARM64_UAO=y
+CONFIG_ARM64_PAN=y
+CONFIG_ARM64_UAO=y
 
 #
 # Boot options
