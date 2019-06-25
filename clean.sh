@@ -6,8 +6,9 @@
 #
 
 # Clean Build Data
-make clean
-make ARCH=arm64 distclean
+export BUILD_JOB_NUMBER=`grep processor /proc/cpuinfo|wc -l`
+make mrproper -j$BUILD_JOB_NUMBER
+make ARCH=arm64 distclean -j$BUILD_JOB_NUMBER
 
 rm -f ./*.log
 
